@@ -6,27 +6,27 @@ Documentation     Orders robots from RobotSpareBin Industries Inc.
 ...               Creates ZIP archive of the receipts and the images.
 Library           RPA.Browser.Selenium
 Library           RPA.HTTP
+Library           RPA.Tables
 Variables         var.py
 
-*** Variables ***
-${orders}=    Get orders
 
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
     Open the robot order website
     Close the modal
-    Fill the form
-
+    ${orders}=    Get orders
+ #   Fill the form
 
 *** Keywords ***
 Open the robot order website
-    Open Browser    ${URL}    chrome
+    Open Available Browser    ${URL}
 
 Close the modal
     Click Element When Visible   ${ACCEPT_BTN}
 
 Get orders
     Download    ${FILE_URL}     overwrite=${True}
+    ${table}=    Read table from CSV    orders.csv
     
-Fill the form
 
+Fill the form
